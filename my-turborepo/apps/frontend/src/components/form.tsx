@@ -8,24 +8,31 @@ import axios from "axios"
 
 export function Form() {
   const [github, setGithub] = useState("");
-  const [linkedin, setLinkedin] = useState("");
+//   const [linkedin, setLinkedin] = useState("");
 
   async function onSubmit(){
-    if(!github || !linkedin){
-            toast("please provide valid github and linkedin")
+    if(!github){
+      toast.error("Please provide a valid GitHub URL");
+      return;
     }
-    await axios.post(`${BACKEND_URL}/api/v1/pre-interview`,{
-        linkedin,
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/v1/pre-interview`, {
         github
-    })
-
+      });
+      toast.success("GitHub data retrieved successfully!");
+      console.log(response.data);
+    } catch (error: any) {
+      console.error(error);
+      const errorMsg = error.response?.data?.message || "Failed to fetch data";
+      toast.error(errorMsg);
+    }
   }
   return (
-    <div className="h-screen bg-gray-800 w-screen flex justify-center items-center">
+    <div className="h-screen bg-gray-800 text-white w-screen flex justify-center items-center">
       <div>
-        <div className="p-4">
+        {/* <div className="p-4">
           <Input placeholder="linkdin url" onChange={e => setLinkedin(e.target.value)} />
-        </div>
+        </div> */}
 
         <div className="p-4">
           <Input placeholder="github url" onChange={e => setGithub(e.target.value)} />
