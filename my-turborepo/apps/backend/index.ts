@@ -3,6 +3,8 @@ import {PreInterviewBody} from "./types"
 import axios from "axios"
 import {ScrapeGithub} from "./scrapper/github.ts"
 import cors from "cors"
+import {prisma} from "./db"
+
 
 const app=express();
 app.use((req, res, next) => {
@@ -40,6 +42,14 @@ app.post("/api/v1/pre-interview", async (req,res)=>{
 
    try {
        const githubData = await ScrapeGithub(githubUrl);
+
+
+
+
+
+
+
+       
        res.json({github:githubData})
    } catch (error: any) {
        console.error(error);

@@ -17,7 +17,7 @@ model Interview {
   githubMetadata Json
   status InterviewStatus
   score Int @default(0)
-  conversations Message
+  conversations Message[]
 
 }
 
