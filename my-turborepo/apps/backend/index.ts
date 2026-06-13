@@ -43,14 +43,13 @@ app.post("/api/v1/pre-interview", async (req,res)=>{
    try {
        const githubData = await ScrapeGithub(githubUrl);
 
-
-
-
-
-
-
-       
-       res.json({github:githubData})
+       const interview = await prisma.interview.create({
+        data: {
+            githubMetadata: JSON.stringify(githubData),
+            status:"Pre"
+        }
+       })
+         res.json({id: interview.id});
    } catch (error: any) {
        console.error(error);
        res.status(500).json({
